@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class PhotoViewModel extends ChangeNotifier {
   Photo _photo = Photo();
+  Photo get photo => _photo;
 
   Result<Photo?>? _uiState;
   Result<Photo?>? get uiState => _uiState;

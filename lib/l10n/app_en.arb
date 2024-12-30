@@ -1,4 +1,9 @@
 {
-    "appName":"Compresso",
-    "choosePhoto":"Choose photo(s)"
+    "appName": "Compresso",
+    "choosePhoto": "Choose photo(s)",
+    "chooseCompression": "Choose compression",
+    "photoToCompress": "Photo to be compressed",
+    "resolution": "Resolution",
+    "selected": "Selected",
+    "size": "Size"
 }
