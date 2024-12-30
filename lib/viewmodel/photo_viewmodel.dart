@@ -1,16 +1,15 @@
-import 'dart:io';
-
 import 'package:compresso/models/photo.dart';
 import 'package:compresso/utils/result.dart';
 import 'package:flutter/material.dart';
 
-class PhotoProvider extends ChangeNotifier {
+class PhotoViewModel extends ChangeNotifier {
   Photo _photo = Photo();
 
   Result<Photo?>? _uiState;
   Result<Photo?>? get uiState => _uiState;
 
-  void selectPhoto() async {
+  Future<void> selectPhoto() async {
+    _photo = Photo();
     var result = await _photo.selectPhoto();
     if (result) {
       _uiState = Result.success(_photo);
@@ -36,8 +35,6 @@ class PhotoProvider extends ChangeNotifier {
   }
 
   void refresh() {
-    _photo = Photo();
     _uiState = null;
-    notifyListeners();
   }
 }

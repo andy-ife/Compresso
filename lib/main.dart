@@ -1,10 +1,13 @@
+import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:compresso/pages/home.dart';
 import 'package:compresso/pages/choose_compression.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => PhotoViewModel(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
         '/choose_compression': (context) => const ChooseCompressionPage(),
       },
       //home: const HomePage(),
-      initialRoute: '/choose_compression',
+      initialRoute: '/',
     );
   }
 }
