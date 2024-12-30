@@ -3,7 +3,7 @@ sealed class Result<T> {
 
   factory Result.success(T value) => Success(value);
   factory Result.error(Exception error) => Error(error);
-  factory Result.loading(T value) => Loading(value);
+  factory Result.loading(String message) => Loading(message);
 }
 
 final class Success<T> extends Result<T> {
@@ -17,6 +17,6 @@ final class Error<T> extends Result<T> {
 }
 
 final class Loading<T> extends Result<T> {
-  const Loading(this.loading);
-  final T loading;
+  const Loading(this.message);
+  final String message;
 }
