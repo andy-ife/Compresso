@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PhotoInfoCard extends StatelessWidget {
-  PhotoInfoCard({super.key, required this.dataType, required this.data});
+  const PhotoInfoCard({super.key, required this.title, required this.info});
 
-  final String dataType;
-  final String data;
+  final String title;
+  final String info;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,14 @@ class PhotoInfoCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          dataType,
+          title,
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(
           height: 8.0,
         ),
         Text(
-          data,
+          info,
           style: theme.textTheme.bodyMedium,
         )
       ],

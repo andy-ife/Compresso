@@ -44,21 +44,20 @@ class ChooseCompressionPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PhotoInfoCard(
-                      dataType: localizations.selected, data: "1 photo"),
+                  PhotoInfoCard(title: localizations.selected, info: "1 photo"),
                   FutureBuilder(
                       future: viewModel.photo.originalSizeKb,
                       builder: (context, snapshot) {
                         return PhotoInfoCard(
-                            dataType: localizations.size,
-                            data: '${snapshot.data} KB');
+                            title: localizations.size,
+                            info: '${snapshot.data} KB');
                       }),
                   FutureBuilder(
                       future: viewModel.photo.resolution,
                       builder: (context, snapshot) {
                         return PhotoInfoCard(
-                            dataType: localizations.resolution,
-                            data:
+                            title: localizations.resolution,
+                            info:
                                 '${snapshot.data?['width']} x ${snapshot.data?['height']}');
                       }),
                 ],
