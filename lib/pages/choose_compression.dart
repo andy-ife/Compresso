@@ -29,8 +29,10 @@ class ChooseCompressionPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(
+            Container(
+              color: theme.colorScheme.surfaceDim,
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Image.file(
                 viewModel.photo.originalFile!,
                 semanticLabel: localizations.photoToCompress,

@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
               secondary: Colors.teal[400],
               secondaryFixed: Colors.teal[100],
               surface: const Color(0xFFF3F4FB),
-              primaryContainer: Colors.indigo[400]),
+              primaryContainer: Colors.indigo[400],
+              surfaceDim: const Color(0xFFE0E0E0)),
           textTheme: const TextTheme(
               titleSmall: TextStyle(
                   fontFamily: 'Montserrat',
