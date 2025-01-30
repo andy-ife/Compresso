@@ -22,7 +22,7 @@ class PhotoViewModel extends ChangeNotifier {
   }
 
   Future<void> compress(int quality) async {
-    _uiState = Result.loading('Compressing photo...');
+    _uiState = Result.loading(0);
     notifyListeners();
 
     var result = await _photo.compress(quality);
