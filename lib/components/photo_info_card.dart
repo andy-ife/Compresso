@@ -11,7 +11,7 @@ class PhotoInfoCard extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
@@ -19,11 +19,11 @@ class PhotoInfoCard extends StatelessWidget {
           style: theme.textTheme.bodySmall,
         ),
         const SizedBox(
-          height: 8.0,
+          height: 2.0,
         ),
         Text(
           info,
-          style: theme.textTheme.bodyMedium,
+          style: theme.textTheme.displaySmall,
         )
       ],
     );

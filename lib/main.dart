@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
               bodySmall: TextStyle(
                 fontFamily: 'Open Sans',
                 fontSize: 12.0,
+                fontWeight: FontWeight.w600,
                 color: Colors.grey,
               )),
           iconTheme: const IconThemeData(color: Colors.white)),

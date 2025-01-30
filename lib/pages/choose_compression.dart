@@ -30,41 +30,57 @@ class ChooseCompressionPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              color: theme.colorScheme.surfaceDim,
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Image.file(
-                viewModel.photo.originalFile!,
-                semanticLabel: localizations.photoToCompress,
-                width: 400.0,
-                height: 300.0,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: theme.colorScheme.surfaceDim)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PhotoInfoCard(title: localizations.selected, info: "1 photo"),
-                  FutureBuilder(
-                      future: viewModel.photo.originalSizeKb,
-                      builder: (context, snapshot) {
-                        return PhotoInfoCard(
-                            title: localizations.size,
-                            info: '${snapshot.data} KB');
-                      }),
-                  FutureBuilder(
-                      future: viewModel.photo.resolution,
-                      builder: (context, snapshot) {
-                        return PhotoInfoCard(
-                            title: localizations.resolution,
-                            info:
-                                '${snapshot.data?['width']} x ${snapshot.data?['height']}');
-                      }),
+                  Container(
+                    color: theme.colorScheme.surfaceDim,
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Image.file(
+                      viewModel.photo.originalFile!,
+                      semanticLabel: localizations.photoToCompress,
+                      width: 160.0,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PhotoInfoCard(
+                            title: localizations.selected, info: "1 photo"),
+                        const SizedBox(height: 8.0),
+                        FutureBuilder(
+                            future: viewModel.photo.originalSizeKb,
+                            builder: (context, snapshot) {
+                              return PhotoInfoCard(
+                                  title: localizations.size,
+                                  info: '${snapshot.data} KB');
+                            }),
+                        const SizedBox(height: 8.0),
+                        FutureBuilder(
+                            future: viewModel.photo.resolution,
+                            builder: (context, snapshot) {
+                              return PhotoInfoCard(
+                                  title: localizations.resolution,
+                                  info:
+                                      '${snapshot.data?['width']} x ${snapshot.data?['height']}');
+                            }),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
