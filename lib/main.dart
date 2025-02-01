@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               surfaceDim: const Color(0xFFE0E0E0)),
           textTheme: const TextTheme(
               titleSmall: TextStyle(
-                  fontFamily: 'Montserrat',
+                  fontFamily: 'Open Sans',
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
