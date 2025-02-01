@@ -1,9 +1,18 @@
 {
     "appName": "Compresso",
+    "compress": "Compress",
     "choosePhoto": "Choose photo(s)",
     "chooseCompression": "Choose compression",
     "photoToCompress": "Photo to be compressed",
     "resolution": "Resolution",
     "selected": "Selected",
-    "size": "Size"
+    "size": "Size",
+    "titleSmallSize": "Small Size",
+    "titleMediumSize": "Medium Size",
+    "titleLargeSize": "Large Size",
+    "titleCustomSize": "Custom File Size",
+    "descSmallSize": "Acceptable Quality - Small File Size",
+    "descMediumSize": "Good Quality - Medium File Size",
+    "descLargeSize": "Best Quality - Large File Size",
+    "descCustomSize": "Specify your own custom size"
 }

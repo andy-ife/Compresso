@@ -16,7 +16,7 @@ class PhotoInfoCard extends StatelessWidget {
       children: [
         Text(
           title,
-          style: theme.textTheme.bodySmall,
+          style: theme.textTheme.labelSmall,
         ),
         const SizedBox(
           height: 2.0,

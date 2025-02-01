@@ -1,11 +1,25 @@
+import 'package:compresso/components/compression_option_card.dart';
+import 'package:compresso/icons/compresso_icons.dart';
 import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:compresso/components/photo_info_card.dart';
 
-class ChooseCompressionPage extends StatelessWidget {
+const int CARD_SMALL_SIZE = 0;
+const int CARD_MEDIUM_SIZE = 1;
+const int CARD_LARGE_SIZE = 2;
+const int CARD_CUSTOM_SIZE = 3;
+
+class ChooseCompressionPage extends StatefulWidget {
   const ChooseCompressionPage({super.key});
+
+  @override
+  State<ChooseCompressionPage> createState() => _ChooseCompressionPageState();
+}
+
+class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
+  int selected = CARD_MEDIUM_SIZE;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +39,8 @@ class ChooseCompressionPage extends StatelessWidget {
         iconTheme: theme.iconTheme,
       ),
       body: Align(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 100.0),
           children: [
             Container(
               padding:
@@ -41,7 +54,8 @@ class ChooseCompressionPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    color: theme.colorScheme.surfaceDim,
+                    height: 200.0,
+                    //color: theme.colorScheme.surfaceDim,
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Image.file(
@@ -51,39 +65,104 @@ class ChooseCompressionPage extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PhotoInfoCard(
-                            title: localizations.selected, info: "1 photo"),
-                        const SizedBox(height: 8.0),
-                        FutureBuilder(
-                            future: viewModel.photo.originalSizeKb,
-                            builder: (context, snapshot) {
-                              return PhotoInfoCard(
-                                  title: localizations.size,
-                                  info: '${snapshot.data} KB');
-                            }),
-                        const SizedBox(height: 8.0),
-                        FutureBuilder(
-                            future: viewModel.photo.resolution,
-                            builder: (context, snapshot) {
-                              return PhotoInfoCard(
-                                  title: localizations.resolution,
-                                  info:
-                                      '${snapshot.data?['width']} x ${snapshot.data?['height']}');
-                            }),
-                      ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PhotoInfoCard(
+                              title: localizations.selected, info: "1 photo"),
+                          const SizedBox(height: 12.0),
+                          FutureBuilder(
+                              future: viewModel.photo.originalSizeKb,
+                              builder: (context, snapshot) {
+                                return PhotoInfoCard(
+                                    title: localizations.size,
+                                    info: '${snapshot.data} KB');
+                              }),
+                          const SizedBox(height: 12.0),
+                          FutureBuilder(
+                              future: viewModel.photo.resolution,
+                              builder: (context, snapshot) {
+                                return PhotoInfoCard(
+                                    title: localizations.resolution,
+                                    info:
+                                        '${snapshot.data?['width']} x ${snapshot.data?['height']}');
+                              }),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
             ),
+            CompressionOptionCard(
+                CARD_SMALL_SIZE,
+                const Icon(CompressoIcons.compress_arrows_alt),
+                localizations.titleSmallSize,
+                localizations.descSmallSize,
+                (selected == CARD_SMALL_SIZE), () {
+              setState(() {
+                selected = CARD_SMALL_SIZE;
+              });
+            }),
+            CompressionOptionCard(
+                CARD_MEDIUM_SIZE,
+                const Icon(CompressoIcons.compress_alt),
+                localizations.titleMediumSize,
+                localizations.descMediumSize,
+                (selected == CARD_MEDIUM_SIZE), () {
+              setState(() {
+                selected = CARD_MEDIUM_SIZE;
+              });
+            }),
+            CompressionOptionCard(
+                CARD_LARGE_SIZE,
+                const Icon(CompressoIcons.compress),
+                localizations.titleLargeSize,
+                localizations.descLargeSize,
+                (selected == CARD_LARGE_SIZE), () {
+              setState(() {
+                selected = CARD_LARGE_SIZE;
+              });
+            }),
+            CompressionOptionCard(
+                CARD_CUSTOM_SIZE,
+                const Icon(Icons.edit_rounded),
+                localizations.titleCustomSize,
+                localizations.descCustomSize,
+                (selected == CARD_CUSTOM_SIZE), () {
+              setState(() {
+                selected = CARD_CUSTOM_SIZE;
+              });
+            })
           ],
         ),
       ),
+      bottomSheet: BottomSheet(
+          onClosing: () {},
+          shape: const RoundedRectangleBorder(),
+          enableDrag: false,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () {},
+              child: Container(
+                  height: 60.0,
+                  color: theme.colorScheme.primaryContainer,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        localizations.compress,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      const Icon(Icons.arrow_right_alt_rounded),
+                    ],
+                  )),
+            );
+          }),
     );
   }
 }
