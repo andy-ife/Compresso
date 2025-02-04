@@ -36,6 +36,7 @@ class PhotoViewModel extends ChangeNotifier {
     } else if (result is Error) {
       _uiState = Result.error((result as Error).error);
       notifyListeners();
+      refresh();
     }
   }
 
@@ -50,10 +51,12 @@ class PhotoViewModel extends ChangeNotifier {
     } else if (result is Error) {
       _uiState = Result.error((result as Error).error);
       notifyListeners();
+      refresh();
     }
   }
 
   void refresh() {
     _uiState = null;
+    notifyListeners();
   }
 }

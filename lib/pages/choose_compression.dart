@@ -1,5 +1,6 @@
 import 'package:compresso/components/compression_option_card.dart';
 import 'package:compresso/components/custom_compression_dialog.dart';
+import 'package:compresso/components/loading_dialog.dart';
 import 'package:compresso/icons/compresso_icons.dart';
 import 'package:compresso/utils/result.dart';
 import 'package:compresso/viewmodel/photo_viewmodel.dart';
@@ -27,6 +28,9 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
 
   late TextEditingController controller;
 
+  late PhotoViewModel viewModel;
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,15 +38,21 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    viewModel = Provider.of<PhotoViewModel>(context, listen: false);
+    viewModel.addListener(mlistener);
+  }
+
+  @override
   void dispose() {
     super.dispose();
     controller.dispose();
+    viewModel.removeListener(mlistener);
   }
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = context.watch<PhotoViewModel>();
-
     ThemeData theme = Theme.of(context);
     AppLocalizations localizations = AppLocalizations.of(context)!;
 
@@ -171,10 +181,17 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                               targetSize != null ? targetSize * 1000000 : null;
                         }
 
-                        var result = await viewModel.compressToSize(targetSize);
+                        Navigator.of(context).pop();
+
+                        await viewModel.compressToSize(targetSize);
 
                         if (viewModel.uiState is Success) {
-                          Navigator.pushNamed(context, '/compression_success');
+                          if (isLoading) {
+                            Navigator.of(context).pop();
+                            isLoading = false;
+                          }
+                          Navigator.pushReplacementNamed(
+                              context, '/compression_success');
                         }
                       });
                     });
@@ -190,9 +207,11 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
           builder: (context) {
             return GestureDetector(
               onTap: () async {
-                await viewModel.compressToQuality(quality);
-                if (viewModel.uiState is Success) {
-                  Navigator.pushNamed(context, '/compression_success');
+                if (selected != CARD_CUSTOM_SIZE) {
+                  await viewModel.compressToQuality(quality);
+                  if (viewModel.uiState is Success) {
+                    Navigator.pushNamed(context, '/compression_success');
+                  }
                 }
               },
               child: Container(
@@ -212,5 +231,27 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
             );
           }),
     );
+  }
+
+  void mlistener() async {
+    final state = viewModel.uiState;
+    if (state is Error) {
+      if (isLoading) {
+        Navigator.of(context).pop();
+        isLoading = false;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text((state as Error).error.toString())),
+      );
+    }
+
+    if (state is Loading) {
+      isLoading = true;
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const LoadingDialog();
+          });
+    }
   }
 }

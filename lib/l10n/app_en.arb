@@ -17,5 +17,6 @@
     "descCustomSize": "Specify your own custom size",
     "customFileSize": "Custom File Size",
     "enterDesiredSize": "Enter desired size",
-    "unit": "Unit"
+    "unit": "Unit",
+    "compressing": "Compressing..."
 }
