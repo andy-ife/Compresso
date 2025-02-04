@@ -51,8 +51,18 @@ class Photo {
     }
   }
 
-  Future<Result<File>> compressToSize(int size) async {
+  Future<Result<File>> compressToSize(int? size) async {
     // size in bytes
+
+    if (size == null) {
+      return Result.error(Exception('Invalid size. Please check your input.'));
+    }
+
+    if (size > await originalFile!.length()) {
+      return Result.error(
+          Exception('Enter a value less than the photo\'s size'));
+    }
+
     try {
       Directory? tempDir = await getTemporaryDirectory();
       String targetPath =

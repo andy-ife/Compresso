@@ -1,5 +1,7 @@
 import 'package:compresso/components/compression_option_card.dart';
+import 'package:compresso/components/custom_compression_dialog.dart';
 import 'package:compresso/icons/compresso_icons.dart';
+import 'package:compresso/utils/result.dart';
 import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,6 +22,22 @@ class ChooseCompressionPage extends StatefulWidget {
 
 class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
   int selected = CARD_MEDIUM_SIZE;
+  int quality = 70; // medium photo quality
+  String unit = 'KB';
+
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +123,7 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                 (selected == CARD_SMALL_SIZE), () {
               setState(() {
                 selected = CARD_SMALL_SIZE;
+                quality = 45; // compress photo to low quality
               });
             }),
             CompressionOptionCard(
@@ -115,6 +134,7 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                 (selected == CARD_MEDIUM_SIZE), () {
               setState(() {
                 selected = CARD_MEDIUM_SIZE;
+                quality = 70; // compress to medium quality
               });
             }),
             CompressionOptionCard(
@@ -125,6 +145,7 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                 (selected == CARD_LARGE_SIZE), () {
               setState(() {
                 selected = CARD_LARGE_SIZE;
+                quality = 90; // compress but retain great quality
               });
             }),
             CompressionOptionCard(
@@ -135,6 +156,28 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                 (selected == CARD_CUSTOM_SIZE), () {
               setState(() {
                 selected = CARD_CUSTOM_SIZE;
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomCompressionSizeDialog(controller, (newUnit) {
+                        unit = newUnit;
+                      }, () async {
+                        int? targetSize = int.tryParse(controller.text);
+                        if (unit == 'KB') {
+                          targetSize =
+                              targetSize != null ? targetSize * 1000 : null;
+                        } else if (unit == 'MB') {
+                          targetSize =
+                              targetSize != null ? targetSize * 1000000 : null;
+                        }
+
+                        var result = await viewModel.compressToSize(targetSize);
+
+                        if (viewModel.uiState is Success) {
+                          Navigator.pushNamed(context, '/compression_success');
+                        }
+                      });
+                    });
               });
             })
           ],
@@ -146,7 +189,12 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
           enableDrag: false,
           builder: (context) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                await viewModel.compressToQuality(quality);
+                if (viewModel.uiState is Success) {
+                  Navigator.pushNamed(context, '/compression_success');
+                }
+              },
               child: Container(
                   height: 60.0,
                   color: theme.colorScheme.primaryContainer,

@@ -13,6 +13,9 @@
     "titleCustomSize": "Custom File Size",
     "descSmallSize": "Acceptable Quality - Small File Size",
     "descMediumSize": "Good Quality - Medium File Size",
-    "descLargeSize": "Best Quality - Large File Size",
-    "descCustomSize": "Specify your own custom size"
+    "descLargeSize": "Superb quality but a larger file size",
+    "descCustomSize": "Specify your own custom size",
+    "customFileSize": "Custom File Size",
+    "enterDesiredSize": "Enter desired size",
+    "unit": "Unit"
 }

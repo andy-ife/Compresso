@@ -39,7 +39,7 @@ class PhotoViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> compressToSize(int size) async {
+  Future<void> compressToSize(int? size) async {
     _uiState = Result.loading(0);
     notifyListeners();
 
