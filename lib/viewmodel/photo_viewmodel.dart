@@ -11,6 +11,10 @@ class PhotoViewModel extends ChangeNotifier {
 
   Future<void> selectPhoto() async {
     _photo = Photo();
+
+    _uiState = Result.loading(0);
+    notifyListeners();
+
     var result = await _photo.selectPhoto();
     if (result) {
       _uiState = Result.success(_photo);
@@ -21,11 +25,25 @@ class PhotoViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> compress(int quality) async {
+  Future<void> compressToQuality(int quality) async {
     _uiState = Result.loading(0);
     notifyListeners();
 
-    var result = await _photo.compress(quality);
+    var result = await _photo.compressToQuality(quality);
+    if (result is Success) {
+      _uiState = Result.success(_photo);
+      notifyListeners();
+    } else if (result is Error) {
+      _uiState = Result.error((result as Error).error);
+      notifyListeners();
+    }
+  }
+
+  Future<void> compressToSize(int size) async {
+    _uiState = Result.loading(0);
+    notifyListeners();
+
+    var result = await _photo.compressToSize(size);
     if (result is Success) {
       _uiState = Result.success(_photo);
       notifyListeners();

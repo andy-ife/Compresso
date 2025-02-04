@@ -33,11 +33,11 @@ class Photo {
     }
   }
 
-  Future<Result<File>> compress(int quality) async {
+  Future<Result<File>> compressToQuality(int quality) async {
     try {
-      Directory? cacheDir = await getApplicationCacheDirectory();
+      Directory? tempDir = await getTemporaryDirectory();
       String targetPath =
-          '${cacheDir.path}/${basename(originalFile!.path)}-compressed.jpg';
+          '${tempDir.path}/${basename(originalFile!.path)}-compressed.jpg';
 
       var file = await FlutterImageCompress.compressAndGetFile(
           originalFile!.absolute.path, targetPath,
@@ -45,6 +45,29 @@ class Photo {
 
       compressedFile = File(file!.path);
       compressedSizeKb; //update the parameter
+      return Result.success(compressedFile!);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result<File>> compressToSize(int size) async {
+    // size in bytes
+    try {
+      Directory? tempDir = await getTemporaryDirectory();
+      String targetPath =
+          '${tempDir.path}/${basename(originalFile!.path)}-compressed.jpg';
+
+      int threshold = 95;
+
+      while (compressedFile == null || await compressedFile!.length() > size) {
+        var file = await FlutterImageCompress.compressAndGetFile(
+            originalFile!.absolute.path, targetPath,
+            quality: threshold);
+
+        compressedFile = File(file!.path);
+        threshold -= (threshold * 0.1).round(); // decrease threshold by 10%
+      }
       return Result.success(compressedFile!);
     } on Exception catch (e) {
       return Result.error(e);
