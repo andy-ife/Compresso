@@ -184,15 +184,6 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
                         Navigator.of(context).pop();
 
                         await viewModel.compressToSize(targetSize);
-
-                        if (viewModel.uiState is Success) {
-                          if (isLoading) {
-                            Navigator.of(context).pop();
-                            isLoading = false;
-                          }
-                          Navigator.pushReplacementNamed(
-                              context, '/compression_success');
-                        }
                       });
                     });
               });
@@ -209,9 +200,6 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
               onTap: () async {
                 if (selected != CARD_CUSTOM_SIZE) {
                   await viewModel.compressToQuality(quality);
-                  if (viewModel.uiState is Success) {
-                    Navigator.pushNamed(context, '/compression_success');
-                  }
                 }
               },
               child: Container(
@@ -252,6 +240,15 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
           builder: (context) {
             return const LoadingDialog();
           });
+    }
+
+    if (state is Success) {
+      if (isLoading) {
+        Navigator.of(context).pop();
+        isLoading = false;
+      }
+
+      Navigator.pushReplacementNamed(context, '/compression_success');
     }
   }
 }

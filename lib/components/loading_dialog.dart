@@ -7,6 +7,7 @@ class LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations localizations = AppLocalizations.of(context)!;
+    ThemeData theme = Theme.of(context);
 
     return AlertDialog(
       content: Padding(
@@ -18,7 +19,10 @@ class LoadingDialog extends StatelessWidget {
             const SizedBox(
               height: 8.0,
             ),
-            Text(localizations.compressing)
+            Text(
+              localizations.compressing,
+              style: theme.textTheme.displayMedium,
+            )
           ],
         ),
       ),
