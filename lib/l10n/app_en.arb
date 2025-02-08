@@ -18,5 +18,10 @@
     "customFileSize": "Custom File Size",
     "enterDesiredSize": "Enter desired size",
     "unit": "Unit",
-    "compressing": "Compressing..."
+    "compressing": "Compressing...",
+    "success": "Success",
+    "originalImage": "Original Image",
+    "compressedImage": "Compressed Image",
+    "original": "Original",
+    "compressed": "Compressed"
 }

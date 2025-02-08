@@ -74,6 +74,7 @@ flutter:
     - assets/small_size.svg
     - assets/medium_size.svg
     - assets/large_size.svg
+    - assets/check_mark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
