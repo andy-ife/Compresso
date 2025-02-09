@@ -14,12 +14,20 @@ class CompressionSuccessPhoto extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: theme.textTheme.displaySmall),
-        const SizedBox(
-          height: 8.0,
-        ),
-        Container(height: 200.0, child: Image.file(file))
+        SizedBox(height: 8.0),
+        Container(
+          height: 300.0,
+          color: theme.colorScheme.surfaceDim,
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Image.file(
+            file,
+            semanticLabel: title,
+            fit: BoxFit.contain,
+          ),
+        )
       ],
     );
   }

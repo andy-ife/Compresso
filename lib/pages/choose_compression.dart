@@ -185,7 +185,8 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
 
                         await viewModel.compressToSize(targetSize);
                       });
-                    });
+                    },
+                    barrierDismissible: false);
               });
             })
           ],

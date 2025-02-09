@@ -23,5 +23,8 @@
     "originalImage": "Original Image",
     "compressedImage": "Compressed Image",
     "original": "Original",
-    "compressed": "Compressed"
+    "compressed": "Compressed",
+    "home": "Home",
+    "share": "Share",
+    "save": "Save"
 }

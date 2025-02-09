@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
               secondaryFixed: Colors.teal[100],
               surface: const Color(0xFFF3F4FB),
               primaryContainer: Colors.indigo[400],
-              surfaceDim: const Color(0xFFE0E0E0)),
+              surfaceDim: const Color(0xFFE0E0E0),
+              surfaceContainer: const Color(0xFFBCC3EB)),
           textTheme: const TextTheme(
               titleSmall: TextStyle(
                   fontFamily: 'Open Sans',
@@ -60,6 +61,12 @@ class MyApp extends StatelessWidget {
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
                 color: Colors.grey,
+              ),
+              headlineSmall: TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               )),
           iconTheme: const IconThemeData(color: Colors.white)),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -67,7 +74,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/choose_compression': (context) => const ChooseCompressionPage(),
-        '/compression_success': (context) => const CompressionSuccessPage()
+        '/compression_success': (context) => CompressionSuccessPage()
       },
       //home: const HomePage(),
       initialRoute: '/',

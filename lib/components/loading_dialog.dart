@@ -17,7 +17,7 @@ class LoadingDialog extends StatelessWidget {
           children: [
             const CircularProgressIndicator(),
             const SizedBox(
-              height: 8.0,
+              height: 16.0,
             ),
             Text(
               localizations.compressing,

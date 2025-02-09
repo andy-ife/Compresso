@@ -70,7 +70,9 @@ class Photo {
 
       int threshold = 95;
 
-      while (compressedFile == null || await compressedFile!.length() > size) {
+      while (
+          (compressedFile == null || await compressedFile!.length() > size) &&
+              threshold > 10) {
         var file = await FlutterImageCompress.compressAndGetFile(
             originalFile!.absolute.path, targetPath,
             quality: threshold);
