@@ -47,7 +47,9 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconWithLabel(
-                    const Icon(Icons.home_outlined), localizations.home, () {}),
+                    const Icon(Icons.home_outlined), localizations.home, () {
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                }),
                 IconWithLabel(const Icon(Icons.share_outlined),
                     localizations.share, () {}),
                 IconWithLabel(
