@@ -41,14 +41,14 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     viewModel = Provider.of<PhotoViewModel>(context, listen: false);
-    viewModel.addListener(mlistener);
+    viewModel.addListener(cclistener);
   }
 
   @override
   void dispose() {
     super.dispose();
     controller.dispose();
-    viewModel.removeListener(mlistener);
+    viewModel.removeListener(cclistener);
   }
 
   @override
@@ -222,7 +222,7 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
     );
   }
 
-  void mlistener() async {
+  void cclistener() async {
     final state = viewModel.uiState;
     if (state is Error) {
       if (isLoading) {
@@ -248,7 +248,6 @@ class _ChooseCompressionPageState extends State<ChooseCompressionPage> {
         Navigator.of(context).pop();
         isLoading = false;
       }
-
       Navigator.pushReplacementNamed(context, '/compression_success');
     }
   }

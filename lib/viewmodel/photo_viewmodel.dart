@@ -15,7 +15,7 @@ class PhotoViewModel extends ChangeNotifier {
     _uiState = Result.loading(0);
     notifyListeners();
 
-    var result = await _photo.selectPhoto();
+    bool result = await _photo.selectPhoto();
     if (result) {
       _uiState = Result.success(_photo);
       notifyListeners();
@@ -51,6 +51,18 @@ class PhotoViewModel extends ChangeNotifier {
     } else if (result is Error) {
       _uiState = Result.error((result as Error).error);
       notifyListeners();
+      refresh();
+    }
+  }
+
+  Future<void> sharePhoto() async {
+    bool result = await _photo.sharePhoto();
+    if (result) {
+      _uiState = Result.success(_photo);
+      notifyListeners();
+    } else {
+      // _uiState = Result.error(Exception('Couldn\'t share photo'));
+      // notifyListeners();
       refresh();
     }
   }

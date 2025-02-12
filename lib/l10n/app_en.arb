@@ -26,5 +26,8 @@
     "compressed": "Compressed",
     "home": "Home",
     "share": "Share",
-    "save": "Save"
+    "save": "Save",
+    "savingPhoto": "Saving Photo",
+    "sharingPhoto": "Sharing Photo",
+    "photoSaved": "Photo saved successfully to "
 }

@@ -6,6 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Photo {
   File? originalFile;
@@ -37,7 +38,7 @@ class Photo {
     try {
       Directory? tempDir = await getTemporaryDirectory();
       String targetPath =
-          '${tempDir.path}/${basename(originalFile!.path)}-compressed.jpg';
+          '${tempDir.path}/${basename(originalFile!.path).split('.').first}-compressed.jpg';
 
       var file = await FlutterImageCompress.compressAndGetFile(
           originalFile!.absolute.path, targetPath,
@@ -66,7 +67,7 @@ class Photo {
     try {
       Directory? tempDir = await getTemporaryDirectory();
       String targetPath =
-          '${tempDir.path}/${basename(originalFile!.path)}-compressed.jpg';
+          '${tempDir.path}/${basename(originalFile!.path).split('.').first}-compressed.jpg';
 
       int threshold = 95;
 
@@ -96,6 +97,23 @@ class Photo {
       resolution; // get resolution
       return true;
     } on Exception {
+      return false;
+    }
+  }
+
+  Future<bool> sharePhoto() async {
+    try {
+      ShareResult result = await Share.shareXFiles(
+          [XFile(compressedFile!.absolute.path)],
+          text: 'Share compressed photo');
+
+      if (result.status == ShareResultStatus.success) {
+        return true;
+      } else {
+        return false;
+      }
+    } on Exception catch (e) {
+      print(e.toString());
       return false;
     }
   }

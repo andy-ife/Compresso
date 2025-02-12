@@ -5,6 +5,7 @@ import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:compresso/utils/result.dart';
 
 class CompressionSuccessPage extends StatefulWidget {
   const CompressionSuccessPage({super.key});
@@ -16,6 +17,9 @@ class CompressionSuccessPage extends StatefulWidget {
 class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
   int? _originalSize;
   final _scrollController = ScrollController();
+
+  late PhotoViewModel viewModel;
+  bool hasSavedPhoto = false;
 
   @override
   void initState() {
@@ -30,11 +34,22 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    viewModel = Provider.of<PhotoViewModel>(context, listen: false);
+    viewModel.addListener(cslistener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    viewModel.removeListener(cslistener);
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     AppLocalizations localizations = AppLocalizations.of(context)!;
-
-    PhotoViewModel viewModel = context.watch<PhotoViewModel>();
 
     return Scaffold(
       appBar: AppBar(),
@@ -50,8 +65,11 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
                     const Icon(Icons.home_outlined), localizations.home, () {
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
-                IconWithLabel(const Icon(Icons.share_outlined),
-                    localizations.share, () {}),
+                IconWithLabel(
+                    const Icon(Icons.share_outlined), localizations.share,
+                    () async {
+                  await viewModel.sharePhoto();
+                }),
                 IconWithLabel(
                     const Icon(Icons.save_outlined), localizations.save, () {})
               ],
@@ -124,5 +142,26 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
         ),
       ),
     );
+  }
+
+  void cslistener() async {
+    final state = viewModel.uiState;
+    AppLocalizations loc = AppLocalizations.of(context)!;
+
+    if (state is Error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text((state as Error).error.toString())),
+      );
+    }
+
+    if (state is Success && hasSavedPhoto == true) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(loc.photoSaved)));
+    }
+
+    if (state is Loading) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(loc.savingPhoto)));
+    }
   }
 }
