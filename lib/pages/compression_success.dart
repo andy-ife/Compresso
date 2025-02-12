@@ -98,28 +98,26 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
                     ],
                   ),
                 ),
-                Column(
-                  children: [
-                    FutureBuilder(
-                      future: viewModel.photo.originalSizeKb,
-                      builder: (context, snapshot) {
-                        _originalSize = snapshot.data;
-                        return PhotoProgressBar(
-                            localizations.original, '${snapshot.data} KB', 1.0);
-                      },
-                    ),
-                    const SizedBox(height: 16.0),
-                    FutureBuilder(
-                      future: viewModel.photo.compressedSizeKb,
-                      builder: (context, snapshot) {
-                        double prog = snapshot.data!.toDouble() /
-                            _originalSize!.toDouble();
-                        return PhotoProgressBar(localizations.compressed,
-                            '${snapshot.data} KB', prog);
-                      },
-                    )
-                  ],
-                )
+                FutureBuilder(
+                    future: viewModel.photo.originalSizeKb,
+                    builder: (context, originalSnapshot) {
+                      return FutureBuilder(
+                          future: viewModel.photo.compressedSizeKb,
+                          builder: (context, compressedSnapshot) {
+                            return Column(
+                              children: [
+                                PhotoProgressBar(localizations.original,
+                                    '${originalSnapshot.data} KB', 1.0),
+                                const SizedBox(height: 16.0),
+                                PhotoProgressBar(
+                                    localizations.compressed,
+                                    '${compressedSnapshot.data} KB',
+                                    compressedSnapshot.data!.toDouble() /
+                                        originalSnapshot.data!.toDouble())
+                              ],
+                            );
+                          });
+                    })
               ],
             ),
           ),
