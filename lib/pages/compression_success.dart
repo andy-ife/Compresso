@@ -15,7 +15,6 @@ class CompressionSuccessPage extends StatefulWidget {
 }
 
 class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
-  int? _originalSize;
   final _scrollController = ScrollController();
 
   late PhotoViewModel viewModel;
@@ -71,7 +70,11 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
                   await viewModel.sharePhoto();
                 }),
                 IconWithLabel(
-                    const Icon(Icons.save_outlined), localizations.save, () {})
+                    const Icon(Icons.save_outlined), localizations.save,
+                    () async {
+                  hasSavedPhoto = true;
+                  await viewModel.savePhoto();
+                })
               ],
             ),
           )),

@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:gallery_saver_plus/gallery_saver.dart';
 
 class Photo {
   File? originalFile;
@@ -105,15 +106,26 @@ class Photo {
     try {
       ShareResult result = await Share.shareXFiles(
           [XFile(compressedFile!.absolute.path)],
-          text: 'Share compressed photo');
+          text: 'Compressed with Compresso');
 
       if (result.status == ShareResultStatus.success) {
         return true;
       } else {
         return false;
       }
-    } on Exception catch (e) {
-      print(e.toString());
+    } on Exception {
+      return false;
+    }
+  }
+
+  Future<bool> savePhoto() async {
+    // todo: add save functionality on iOS
+    try {
+      bool? result = await GallerySaver.saveImage(compressedFile!.path,
+          albumName: 'Compresso');
+      result ??= false;
+      return result;
+    } on Exception {
       return false;
     }
   }

@@ -67,6 +67,18 @@ class PhotoViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> savePhoto() async {
+    bool result = await _photo.savePhoto();
+    if (result) {
+      _uiState = Result.success(_photo);
+      notifyListeners();
+    } else {
+      _uiState = Result.error(Exception('Couldn\'t save photo'));
+      notifyListeners();
+      refresh();
+    }
+  }
+
   void refresh() {
     _uiState = null;
     notifyListeners();
