@@ -1,7 +1,7 @@
 import 'package:compresso/components/compression_option_card.dart';
 import 'package:compresso/components/custom_compression_dialog.dart';
 import 'package:compresso/components/loading_dialog.dart';
-import 'package:compresso/icons/compresso_icons.dart';
+import 'package:compresso/components/compresso_icons.dart';
 import 'package:compresso/utils/result.dart';
 import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
