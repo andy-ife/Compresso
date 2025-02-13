@@ -35,7 +35,8 @@ class _CustomCompressionSizeDialogState
             keyboardType: TextInputType.number,
             style: theme.textTheme.displayMedium,
             decoration: InputDecoration(
-                constraints: const BoxConstraints(maxWidth: 180.0),
+                constraints: const BoxConstraints(maxWidth: 160.0),
+                fillColor: theme.colorScheme.surfaceDim,
                 hintText: localizations.enterDesiredSize,
                 hintStyle: theme.textTheme.labelMedium,
                 filled: true),

@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: CompressoTheme.light,
       darkTheme: CompressoTheme.dark,
       themeMode: ThemeMode.system,
+      themeAnimationStyle: AnimationStyle.noAnimation,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routes: {

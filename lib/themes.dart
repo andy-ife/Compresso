@@ -108,7 +108,7 @@ class CompressoTheme {
             fontFamily: 'Open Sans',
             fontSize: 12.0,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: Colors.white,
           )),
       iconTheme: const IconThemeData(color: Colors.white));
 }

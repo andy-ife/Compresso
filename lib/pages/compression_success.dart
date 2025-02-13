@@ -61,23 +61,17 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconWithLabel(
-                    Icon(
-                      Icons.home_outlined,
-                      color: theme.colorScheme.onPrimaryContainer,
-                    ),
-                    localizations.home, () {
+                    const Icon(Icons.home_outlined), localizations.home, () {
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
                 IconWithLabel(
-                    Icon(Icons.share_outlined,
-                        color: theme.colorScheme.onPrimaryContainer),
-                    localizations.share, () async {
+                    const Icon(Icons.share_outlined), localizations.share,
+                    () async {
                   await viewModel.sharePhoto();
                 }),
                 IconWithLabel(
-                    Icon(Icons.save_outlined,
-                        color: theme.colorScheme.onPrimaryContainer),
-                    localizations.save, () async {
+                    const Icon(Icons.save_outlined), localizations.save,
+                    () async {
                   hasSavedPhoto = true;
                   await viewModel.savePhoto();
                 })
