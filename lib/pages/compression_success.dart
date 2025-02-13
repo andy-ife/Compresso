@@ -109,13 +109,20 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     controller: _scrollController,
                     children: [
-                      CompressionSuccessPhoto(viewModel.photo.originalFile!,
-                          localizations.original),
+                      CompressionSuccessPhoto(
+                          viewModel.photo.originalFile!, localizations.original,
+                          () {
+                        Navigator.pushNamed(context, '/photo_preview',
+                            arguments: PhotoPreviewArgs(0));
+                      }),
                       const SizedBox(
                         width: 24.0,
                       ),
                       CompressionSuccessPhoto(viewModel.photo.compressedFile!,
-                          localizations.compressed)
+                          localizations.compressed, () {
+                        Navigator.pushNamed(context, '/photo_preview',
+                            arguments: PhotoPreviewArgs(1));
+                      })
                     ],
                   ),
                 ),
@@ -167,4 +174,9 @@ class _CompressionSuccessPageState extends State<CompressionSuccessPage> {
           .showSnackBar(SnackBar(content: Text(loc.savingPhoto)));
     }
   }
+}
+
+class PhotoPreviewArgs {
+  final int initialPage;
+  PhotoPreviewArgs(this.initialPage);
 }

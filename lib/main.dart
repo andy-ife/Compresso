@@ -1,4 +1,5 @@
 import 'package:compresso/pages/compression_success.dart';
+import 'package:compresso/pages/photo_preview.dart';
 import 'package:compresso/viewmodel/photo_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:compresso/pages/home.dart';
@@ -74,7 +75,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/choose_compression': (context) => const ChooseCompressionPage(),
-        '/compression_success': (context) => CompressionSuccessPage()
+        '/compression_success': (context) => const CompressionSuccessPage(),
+        '/photo_preview': (context) => PhotoPreviewPage()
       },
       //home: const HomePage(),
       initialRoute: '/',
